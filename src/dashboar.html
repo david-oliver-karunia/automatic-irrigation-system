@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Automatic Irrigation Dashboard</title>
+</head>
+<body>
+  <h1>Automatic Irrigation Dashboard</h1>
+
+  <p>Soil reading: <span id="soil">--</span></p>
+  <p>Reservoir level: <span id="reservoir">--</span></p>
+  <p>Pump status: <span id="pump">--</span></p>
+
+  <button onclick="setPump('on')">Pump on</button>
+  <button onclick="setPump('off')">Pump off</button>
+
+  <script>
+    const esp32Address = "http://YOUR_ESP32_IP";
+
+    async function refresh() {
+      const response = await fetch(`${esp32Address}/api/status`);
+      const data = await response.json();
+
+      document.getElementById("soil").textContent = data.soilRaw;
+      document.getElementById("reservoir").textContent =
+        data.reservoirPercent.toFixed(1) + "%";
+      document.getElementById("pump").textContent =
+        data.pumpOn ? "ON" : "OFF";
+    }
+
+    async function setPump(state) {
+      await fetch(`${esp32Address}/api/pump?state=${state}`);
+      refresh();
+    }
+
+    refresh();
+    setInterval(refresh, 2000);
+  </script>
+</body>
+</html>
