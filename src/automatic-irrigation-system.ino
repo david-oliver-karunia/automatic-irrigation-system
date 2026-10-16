@@ -4,10 +4,11 @@
 const char* WIFI_SSID = "YOUR_WIFI_NAME";
 const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
 
-const int SOIL_PIN = 1;
-const int TRIG_PIN = 5;
-const int ECHO_PIN = 18;
-const int RELAY_PIN = 7;
+const int SOIL_SCL = 9;
+const int SOIL_SDA = 8;
+const int TRIG_PIN = 13;
+const int ECHO_PIN = 14;
+const int RELAY_PIN = 10;
 
 const int SOIL_DRY_THRESHOLD = 2600;
 
